@@ -2,7 +2,7 @@
 
 ROS2 package implementing **gaze stabilization** for the xArm6 robot using the **Levenberg-Marquardt (LM) algorithm** for inverse kinematics. The end-effector is kept fixed in the world frame while the robot base undergoes arbitrary disturbances — analogous to a chicken's head remaining still as its body moves.
 
-<video src="media/demo.mp4" controls width="100%"></video>
+[![Demo](https://img.youtube.com/vi/WpYp7IKRwQ4/maxresdefault.jpg)](https://youtu.be/WpYp7IKRwQ4)
 
 ---
 
