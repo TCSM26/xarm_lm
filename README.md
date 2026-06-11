@@ -2,7 +2,7 @@
 
 ROS2 package implementing **gaze stabilization** for the xArm6 robot using the **Levenberg-Marquardt (LM) algorithm** for inverse kinematics. The end-effector is kept fixed in the world frame while the robot base undergoes arbitrary disturbances — analogous to a chicken's head remaining still as its body moves.
 
-<video src="media/demo.webm" controls width="100%"></video>
+<video src="media/demo.mp4" controls width="100%"></video>
 
 ---
 
@@ -68,18 +68,60 @@ xarm_lm/
 │   ├── gaze_stabilizer.py   # Main control node
 │   ├── base_disturbance.py  # Simulated base motion
 │   └── initial_pose.py      # Startup utility
-└── launch/
-    └── gaze_stabilizer.launch.py
+├── launch/
+│   └── gaze_stabilizer.launch.py
+└── media/
+    └── demo.mp4             # Demo video
 ```
 
 ---
 
 ## Dependencies
 
-- `xarm_ros2` (xArm description, controllers, MoveIt config, MoveIt Servo)
-- `moveit_servo` (ROS2 Humble)
-- `rclpy`, `tf2_ros`, `geometry_msgs`, `std_msgs`, `std_srvs`, `trajectory_msgs`
-- Python: `numpy`, `scipy`
+This package is a thin layer on top of the official [xarm_ros2](https://github.com/xArm-Developer/xarm_ros2) stack. You must have that stack built and sourced before building or running `xarm_lm`.
+
+**Required ROS2 packages (ROS2 Humble):**
+
+| Package | Source |
+|---------|--------|
+| `xarm_ros2` (full stack) | [github.com/xArm-Developer/xarm_ros2](https://github.com/xArm-Developer/xarm_ros2) |
+| `moveit_servo` | `apt install ros-humble-moveit-servo` |
+| `uf_ros_lib` | bundled with `xarm_ros2` |
+
+**Python:**
+- `numpy`
+- `scipy`
+
+---
+
+## Setup
+
+### 1 — Clone and build xarm_ros2
+
+```bash
+mkdir -p ~/xarm_ws/src && cd ~/xarm_ws/src
+git clone https://github.com/xArm-Developer/xarm_ros2.git --recursive
+cd ~/xarm_ws
+rosdep install --from-paths src --ignore-src -r -y
+colcon build --symlink-install
+source install/setup.bash
+```
+
+### 2 — Add xarm_lm to the same workspace
+
+```bash
+cd ~/xarm_ws/src
+git clone <this-repo-url> xarm_lm
+cd ~/xarm_ws
+colcon build --symlink-install --packages-select xarm_lm
+source install/setup.bash
+```
+
+### 3 — Install MoveIt Servo (if not already present)
+
+```bash
+sudo apt install ros-humble-moveit-servo
+```
 
 ---
 
